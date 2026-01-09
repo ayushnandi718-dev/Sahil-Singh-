@@ -3,254 +3,433 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahil Singh | Official Portfolio</title>
+    <title>Sahil Singh | Vocal Artist Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
             background-color: #050505;
             color: #ffffff;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
         }
-        .serif-font {
-            font-family: 'Playfair Display', serif;
-        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
         .glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        /* --- Hero Animations --- */
-        @keyframes kenBurns {
-            from { transform: scale(1); }
-            to { transform: scale(1.15); }
-        }
-        .hero-bg-animate {
-            animation: kenBurns 20s ease-out forwards;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .song-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .animate-fade-up {
-            opacity: 0;
-            animation: fadeUp 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+        .song-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-8px);
+            border-color: rgba(244, 63, 94, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
+        .song-card img { transition: transform 0.6s ease; }
+        .song-card:hover img { transform: scale(1.1); }
 
-        /* Scroll Reveal Base Style */
+        .gradient-text {
+            background: linear-gradient(90deg, #f43f5e, #fb923c, #facc15);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animation for the name on load */
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(100px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-name {
+            animation: slideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            display: inline-block;
+        }
+
         .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .music-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
+        /* Slider Specific Styles */
+        .quote-slider {
+            position: relative;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        .quote-slide {
+            position: absolute;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        .quote-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to bottom, 
+                rgba(5,5,5,0.1) 0%, 
+                rgba(5,5,5,0.3) 40%, 
+                rgba(5,5,5,0.7) 80%, 
+                rgba(5,5,5,1) 100%);
+        }
+
+        /* Simplified and focused About Photo */
+        .about-photo-container {
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .about-photo-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            pointer-events: none;
+        }
+
+        footer a { transition: all 0.3s ease; }
     </style>
 </head>
-<body class="antialiased">
+<body class="overflow-x-hidden">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center glass">
-        <div class="text-xl font-bold tracking-tighter">SAHIL SINGH</div>
-        <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-medium">
-            <a href="#home" class="hover:text-gray-400 transition">Home</a>
-            <a href="#about" class="hover:text-gray-400 transition">About</a>
-            <a href="#music" class="hover:text-gray-400 transition">Music</a>
-        </div>
-        <div class="md:hidden">
-            <span class="text-sm opacity-50">Artist Portfolio</span>
+    <nav class="fixed top-0 w-full z-50 glass py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-bold tracking-tighter italic">SAHIL <span class="gradient-text text-2xl md:text-3xl">SINGH </span></div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
+                <a href="#hero" class="hover:text-white transition-colors">Home</a>
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="#music-library" class="hover:text-white transition-colors">Music Library</a>
+                <a href="#contact" class="px-6 py-2 rounded-full bg-rose-600 text-white hover:bg-rose-500 transition-all font-bold">Contact</a>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-black/60 z-10"></div>
-            <img 
-                src="https://raw.githubusercontent.com/ayushnandi718-dev/Sahil-Singh-/main/images.jpeg" 
-                class="w-full h-full object-cover hero-bg-animate" 
-                alt="Sahil Singh Hero Image"
-                onerror="this.src='https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=2070&auto=format&fit=crop'"
-            >
+            <img src="https://raw.githubusercontent.com/ayushnandi718-dev/Sahil-Singh-/main/images.jpeg" class="w-full h-full object-cover object-center" alt="Sahil Singh">
+            <div class="absolute inset-0 hero-overlay"></div>
         </div>
         
-        <div class="relative z-20 text-center px-4">
-            <span class="block mb-4 text-sm tracking-[0.3em] uppercase opacity-70 animate-fade-up">Contemporary Artist</span>
-            <h1 class="text-6xl md:text-9xl font-bold serif-font mb-6 leading-tight animate-fade-up delay-1">Sahil Singh</h1>
-            <p class="max-w-xl mx-auto text-gray-300 text-lg mb-8 animate-fade-up delay-2">Bridging the worlds of Hindi and Bhojpuri music through soulful melodies and trending rhythms.</p>
-            <div class="flex flex-wrap justify-center gap-4 animate-fade-up delay-3">
-                <a href="https://open.spotify.com/artist/4QQdPHagGVXBWRBtic4XzL?si=P_ewBIraRyW1sDaH_-Djzg" target="_blank" class="px-8 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition shadow-lg">Listen on Spotify</a>
-                <a href="https://www.instagram.com/sahilll.singhh?igsh=bmlzYjdscjM2ZGQ3" target="_blank" class="px-8 py-3 border border-white rounded-full font-semibold hover:bg-white hover:text-black transition">Follow on Instagram</a>
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-7xl md:text-[10rem] font-bold tracking-tight mb-8 leading-[0.8] drop-shadow-2xl overflow-hidden">
+                <span class="animate-name">Sahil</span> <br> 
+                <span class="animate-name gradient-text italic" style="animation-delay: 0.15s;">Singh.</span>
+            </h1>
+            <div class="reveal active" style="transition-delay: 0.5s;">
+                <p class="text-white text-lg md:text-xl mb-10 max-w-lg mx-auto font-semibold drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                    Vocal Artist & Songwriter
+                </p>
+                <a href="#music-library" class="inline-block bg-white text-black px-10 py-4 rounded-full font-bold hover:scale-105 transition-all shadow-xl">
+                    Explore Music
+                </a>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 px-6 md:px-20 bg-black">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="reveal">
-                <h2 class="text-4xl font-bold mb-8 serif-font">About the Artist</h2>
-                <p class="text-gray-400 leading-relaxed mb-6">
-                    Sahil Singh is a contemporary Indian singer known for releasing numerous singles, often in Hindi and Bhojpuri. His unique voice has captivated audiences across platforms like JioSaavn, Apple Music, and Spotify. 
-                </p>
-                <p class="text-gray-400 leading-relaxed mb-6">
-                    With popular tracks like <span class="text-white">"Haee Babuaan Janela Jahan," "Roya Uske Liye,"</span> and <span class="text-white">"Meri Haan,"</span> he has established a significant presence. Sahil frequently collaborates with industry names like Big Scratch and Navyug on high-energy tracks like "VELVET".
-                </p>
-                <div class="grid grid-cols-2 gap-4 mt-8">
-                    <div class="glass p-4 rounded-xl">
-                        <h4 class="text-xs uppercase text-gray-500 mb-1">Genres</h4>
-                        <p class="text-sm">Hindi, Bhojpuri, Pop, Devotional</p>
-                    </div>
-                    <div class="glass p-4 rounded-xl">
-                        <h4 class="text-xs uppercase text-gray-500 mb-1">Recent Album</h4>
-                        <p class="text-sm">Welcome Rockstar</p>
+    <section id="about" class="py-32 bg-[#0a0a0a]">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <!-- Updated: Focused single photo for Sahil -->
+                    <div class="about-photo-container glass p-2">
+                        <img src="https://raw.githubusercontent.com/ayushnandi718-dev/Sahil-Singh-/main/images.jpeg" 
+                             alt="Sahil Singh Portrait" 
+                             class="w-full h-full object-cover rounded-[1.5rem] grayscale hover:grayscale-0 transition-all duration-700">
                     </div>
                 </div>
-            </div>
-            <div class="relative group reveal">
-                <div class="absolute -inset-1 bg-gradient-to-r from-gray-700 to-gray-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                <div class="relative aspect-[3/4] bg-gray-900 rounded-2xl overflow-hidden shadow-2xl">
-                    <img 
-                        src="https://raw.githubusercontent.com/ayushnandi718-dev/Sahil-Singh-/main/images%20(1).jpeg" 
-                        class="w-full h-full object-cover transition duration-700 group-hover:scale-105" 
-                        alt="Sahil Singh Performance"
-                        onerror="this.src='https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070&auto=format&fit=crop'"
-                    >
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-8 leading-tight italic">About <br><span class="text-rose-500">Sahil Singh</span></h2>
+                    <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+                        For Sahil, music is a conversation. Blending traditional soul with modern indie-pop, he creates an unforgettable sonic journey for every listener. His voice carries the weight of stories untold, bridging the gap between melody and pure emotion.
+                    </p>
+                    <p class="text-gray-500 text-md leading-relaxed italic border-l-4 border-rose-500 pl-6 py-2">
+                        "Every performance is a chance to connect, to share a piece of my world with yours."
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Music Library -->
-    <section id="music" class="py-24 px-6 md:px-10 bg-[#0a0a0a]">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-16 reveal">
-                <h2 class="text-5xl font-bold serif-font mb-4">Music Gallery</h2>
-                <p class="text-gray-500">Discover Sahil Singh's discography</p>
+    <!-- Music Library Section -->
+    <section id="music-library" class="py-32 bg-[#050505]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h3 class="text-5xl md:text-7xl font-bold italic">Music Library</h3>
+            </div>
+            <div id="song-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8"></div>
+        </div>
+    </section>
+
+    <!-- Quotes Slider Section -->
+    <section id="quotes" class="py-32 bg-[#0a0a0a] overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-10 reveal">
+                <span class="text-rose-500 font-bold tracking-[0.3em] uppercase text-xs">Artistic Vision</span>
+            </div>
+            
+            <div class="quote-slider">
+                <!-- Slide 1 -->
+                <div class="quote-slide active flex flex-col items-center">
+                    <i class="fas fa-quote-left text-3xl text-white/10 mb-6"></i>
+                    <h4 class="text-3xl md:text-5xl font-bold italic leading-tight px-4">
+                        "Music is the <span class="gradient-text">shorthand</span> of emotion."
+                    </h4>
+                    <p class="mt-6 text-gray-500 font-medium tracking-widest uppercase text-sm">— Leo Tolstoy</p>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="quote-slide flex flex-col items-center">
+                    <i class="fas fa-quote-left text-3xl text-white/10 mb-6"></i>
+                    <h4 class="text-3xl md:text-5xl font-bold italic leading-tight px-4">
+                        "Where words fail, <span class="text-rose-500">music speaks</span>."
+                    </h4>
+                    <p class="mt-6 text-gray-500 font-medium tracking-widest uppercase text-sm">— Hans Christian Andersen</p>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="quote-slide flex flex-col items-center">
+                    <i class="fas fa-quote-left text-3xl text-white/10 mb-6"></i>
+                    <h4 class="text-3xl md:text-5xl font-bold italic leading-tight px-4">
+                        "Every song has a <span class="text-orange-400">soul</span> waiting to be heard."
+                    </h4>
+                    <p class="mt-6 text-gray-500 font-medium tracking-widest uppercase text-sm">— Sahil Singh</p>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="quote-slide flex flex-col items-center">
+                    <i class="fas fa-quote-left text-3xl text-white/10 mb-6"></i>
+                    <h4 class="text-3xl md:text-5xl font-bold italic leading-tight px-4">
+                        "Life is one grand <span class="gradient-text">sweet song</span>, so start the music."
+                    </h4>
+                    <p class="mt-6 text-gray-500 font-medium tracking-widest uppercase text-sm">— Ronald Reagan</p>
+                </div>
+
+                <!-- Slide 5 -->
+                <div class="quote-slide flex flex-col items-center">
+                    <i class="fas fa-quote-left text-3xl text-white/10 mb-6"></i>
+                    <h4 class="text-3xl md:text-5xl font-bold italic leading-tight px-4">
+                        "Music washes away from the soul the <span class="text-rose-500">dust</span> of everyday life."
+                    </h4>
+                    <p class="mt-6 text-gray-500 font-medium tracking-widest uppercase text-sm">— Berthold Auerbach</p>
+                </div>
+
+                <!-- Slide 6 -->
+                <div class="quote-slide flex flex-col items-center">
+                    <i class="fas fa-quote-left text-3xl text-white/10 mb-6"></i>
+                    <h4 class="text-3xl md:text-5xl font-bold italic leading-tight px-4">
+                        "To sing is to <span class="text-orange-400">breathe</span> in a different way."
+                    </h4>
+                    <p class="mt-6 text-gray-500 font-medium tracking-widest uppercase text-sm">— Unknown</p>
+                </div>
+
+                <!-- Slide 7 -->
+                <div class="quote-slide flex flex-col items-center">
+                    <i class="fas fa-quote-left text-3xl text-white/10 mb-6"></i>
+                    <h4 class="text-3xl md:text-5xl font-bold italic leading-tight px-4">
+                        "The only truth is <span class="gradient-text">music</span>."
+                    </h4>
+                    <p class="mt-6 text-gray-500 font-medium tracking-widest uppercase text-sm">— Jack Kerouac</p>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="musicGrid">
-                <!-- Cards injected by JavaScript -->
+            <!-- Slider Dots -->
+            <div id="slider-dots" class="flex justify-center gap-3 mt-10">
+                <!-- Dots generated by JS -->
             </div>
         </div>
     </section>
 
-    <!-- Footer / Contact Section -->
-    <footer class="py-12 px-6 border-t border-zinc-900 text-center text-zinc-500 text-sm bg-black">
-        <div class="mb-8 reveal">
-            <h3 class="text-white text-xl font-bold serif-font mb-4">Connect with Sahil</h3>
-            <div class="flex justify-center space-x-6">
-                <a href="https://open.spotify.com/artist/4QQdPHagGVXBWRBtic4XzL?si=P_ewBIraRyW1sDaH_-Djzg" target="_blank" class="hover:text-white transition flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm5.508 17.304c-.216.354-.672.468-1.026.252-2.85-1.74-6.438-2.13-10.662-1.164-.402.096-.81-.15-.906-.552-.096-.402.15-.81.552-.906 4.638-1.062 8.604-.612 11.79 1.332.354.21.468.672.252 1.032zm1.47-3.258c-.276.444-.858.582-1.302.306-3.264-2.004-8.238-2.586-12.096-1.416-.498.15-1.026-.132-1.176-.63-.15-.498.132-1.026.63-1.176 4.41-1.338 9.894-.696 13.638 1.602.444.276.582.858.306 1.314zm.126-3.414C15.24 8.214 8.844 8 5.124 9.126a1.122 1.122 0 1 1-.66-2.148c4.26-1.296 11.334-1.062 15.822 1.602a1.122 1.122 0 1 1-1.182 1.902z"/></svg>
-                    Spotify
-                </a>
-                <a href="https://music.apple.com/in/artist/sahil-singh/1659141416" target="_blank" class="hover:text-white transition flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.1 2.48-1.34.03-1.77-.79-3.29-.79-1.53 0-1.99.76-3.27.82-1.31.05-2.32-1.32-3.15-2.52-1.71-2.46-3.01-6.95-1.26-9.98.87-1.51 2.41-2.46 4.11-2.49 1.29-.03 2.51.87 3.3.87.79 0 2.27-1.07 3.8-0.91 0.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.37 2.81zM15.48 2c-1.03 1.23-1.83 2.66-1.53 4.42 1.58.13 2.97-.68 3.76-2.13 0.73-1.35.53-2.91-1.1-4.04z"/></svg>
-                    Apple Music
-                </a>
-                <a href="https://www.instagram.com/sahilll.singhh?igsh=bmlzYjdscjM2ZGQ3" target="_blank" class="hover:text-white transition flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    Instagram
-                </a>
+    <!-- Footer & Contact Section -->
+    <footer id="contact" class="bg-[#050505] pt-32 pb-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 mb-24 reveal">
+                <div>
+                    <h2 class="text-5xl md:text-7xl font-bold mb-8 italic">Let's <br><span class="gradient-text">Connect.</span></h2>
+                    <p class="text-gray-400 text-lg mb-10 max-w-md">
+                        Whether it's for a collaboration, a booking, or just to say hello, feel free to reach out on social media.
+                    </p>
+                    <div class="flex space-x-5">
+                        <a href="https://www.instagram.com/sahilll.singhh/?hl=en#" target="_blank" class="w-14 h-14 rounded-full glass flex items-center justify-center text-xl hover:bg-rose-600 hover:text-white hover:scale-110" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://open.spotify.com/artist/4QQdPHagGVXBWRBtic4XzL?si=5iL2WnyUT8mlF9xgPZO1sg" target="_blank" class="w-14 h-14 rounded-full glass flex items-center justify-center text-xl hover:bg-green-500 hover:text-white hover:scale-110" title="Spotify">
+                            <i class="fab fa-spotify"></i>
+                        </a>
+                        <a href="https://music.youtube.com/channel/UCoAN3hfGBE5Z-vCgxu5cZZA?si=GihXf-r9-zwkFfAml" target="_blank" class="w-14 h-14 rounded-full glass flex items-center justify-center text-xl hover:bg-red-600 hover:text-white hover:scale-110" title="YouTube Music">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center">
+                    <div class="glass p-8 rounded-3xl space-y-6">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center text-rose-500 shrink-0">
+                                <i class="fas fa-paper-plane"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Social Media</h4>
+                                <p class="text-xl font-semibold text-white">DM for Bookings</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-2xl bg-orange-500/10 flex items-center justify-center text-orange-500 shrink-0">
+                                <i class="fas fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-1">Location</h4>
+                                <p class="text-xl font-semibold text-white">Mumbai, India</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-gray-500 text-sm">
+                    &copy; <script>document.write(new Date().getFullYear())</script> <span class="text-white font-bold">Sahil Singh</span>. All Rights Reserved.
+                    <br class="md:hidden">
+                    <span class="md:ml-4 text-gray-600">Created by <span class="text-rose-500/80 font-semibold tracking-wide">AYUSH NANDI</span></span>
+                </div>
+                <div class="flex gap-8 text-xs font-bold text-gray-500 tracking-widest uppercase">
+                    <a href="#hero" class="hover:text-rose-500">Back to Top</a>
+                </div>
             </div>
         </div>
-        <p>© 2025 Sahil Singh Music. All Rights Reserved.</p>
     </footer>
 
     <script>
-        const songs = [
-            "Chaandni", "Behta Raha", "Pyaari Baatein", "Hum Tum Sanam", 
-            "Haqdaar", "Kasmein", "Bemisaal", "Yaadein", 
-            "Tanha", "Mita Dena", "Sitaara", "Bezubaan", 
-            "Tum hi tum", "Kaafiraana", "Gunaah", "Nawaab", 
-            "Ruhaaniyat", "Kasoor", "Akh lad Jaave", "Zaalima", 
-            "Tera Deewana", "Best friends", "Nazrein", "Door tu", 
-            "Jado mila", "Khaamiyaza", "Emni Si Sawaal", "Khudgarzi"
+        const trackData = [
+            { name: "Khaamiyaza", link: "https://open.spotify.com/track/0iY1H4Kq9GiHEVz7iWxOYc?si=fe0ca56e5ad840f5" },
+            { name: "Emni si Sawaal", link: "https://open.spotify.com/track/3CN2hfv0GAKMWi5EuSmSDg?si=658c03a4dc1e4489" },
+            { name: "Kasmein", link: "https://open.spotify.com/track/0GAYE9F1S0EP1dIWB6N9JY?si=7b74413fec754745" },
+            { name: "Velvet", link: "https://open.spotify.com/track/78ZUKWUDP1Qva7amYpQSNF?si=09b81552e661422b" },
+            { name: "Pyaari Baatein", link: "https://open.spotify.com/track/2keJGVHYSRDiza3HciBkhm?si=9999925dbf8e478b" },
+            { name: "HEERE", link: "https://open.spotify.com/track/5Bf4s5ycosXnt9XgXXgNpx?si=c6d6517fdaf64492" },
+            { name: "Tera Deewana", link: "https://open.spotify.com/track/4uuzo1yEyCcXJL6t2JsnWI?si=681cb3f434a14362" },
+            { name: "Yaadein", link: "https://open.spotify.com/track/2cj2kpYhThGHmyDTuHXvWG?si=5ff13ec8c1974640" },
+            { name: "DOOR TU", link: "https://open.spotify.com/track/4kpfdmm9K02TrGnhIJobex?si=a124fd36876b4fd4" },
+            { name: "Khudgarzi", link: "https://open.spotify.com/album/08YZ8FbBKtiL80X9CdNglg?si=cGeEa7XqR9OVUMzku-bJBA" },
+            { name: "Best Friends", link: "https://open.spotify.com/album/7qFWxbubvGZNeBdudU0WZg?si=pli83UedRWeuZjq3fHYSqg" },
+            { name: "AKH LAD JAAVE", link: "https://open.spotify.com/album/7qFWxbubvGZNeBdudU0WZg?si=pli83UedRWeuZjq3fHYSqg" },
+            { name: "GTOWN SHEHER", link: "https://open.spotify.com/album/7yzF6yKQeBorXbFPKqX14F?si=V__z2BqPSX6Lqp8RsPH-pw" },
+            { name: "JEENA NAHI HAI", link: "https://open.spotify.com/album/4ghr2QjM8j4UsMKoolyoEI?si=JRUEHNJqRTiZ1DtxqDVfBg" },
+            { name: "Sajna Ve", link: "https://open.spotify.com/album/5RsA57XOFXWguBvgg7QzSb?si=RxIUzB5GQtS1xnafaTaG6A" },
+            { name: "SITAARA", link: "https://open.spotify.com/track/2SjMl3ggoz6LVB4EdzGemR?si=c6e43fd86a674a83" },
+            { name: "BEHTA RAHA", link: "https://open.spotify.com/track/12no63oZfgdaf8Tov3EEV9?si=d4a0384735fd4238" },
+            { name: "TANHA", link: "https://open.spotify.com/track/32Qvi1UrftuYrZDRDxdPR4?si=2b7397aa8f4944e7" },
+            { name: "KASOOR", link: "https://open.spotify.com/track/4TLqImswnHYTwOoNoOVhkw?si=3e410e572c514581" },
+            { name: "BEZUBAAN", link: "https://open.spotify.com/track/6T7XbbXe8ga9t0vojvgptF?si=ac44b5aca34347c3" },
+            { name: "SITAARA (Instrumental)", link: "https://open.spotify.com/track/1S2al0jpKdkIDnT35I1T9s?si=0948adad436e4530" },
+            { name: "BEHTA RAHA (Instrumental)", link: "https://open.spotify.com/track/38ssjIHw1yREdEBS1bmtAR?si=f98fe89f53d545b1" },
+            { name: "Taqdeer-e-Kalam", link: "https://open.spotify.com/track/5HX8tyPnAFpsdw8hAboOel?si=9fff30cb583f49d9" },
+            { name: "Sharaafat", link: "https://open.spotify.com/track/2Ot2lm14zFLoIqZ4Jfop5w?si=27981db7d7084cd3" },
+            { name: "Laaparwah", link: "https://open.spotify.com/track/0gyi4wL4xflMkJRlkbVK72?si=264110698e6b4d7b" },
+            { name: "Mita Dena", link: "https://open.spotify.com/track/2qJ2A0mzNTwkp0ri9M9KfS?si=8c78f00ee7064a9c" },
+            { name: "Laapata", link: "https://open.spotify.com/track/1j8PHJ0Zi037Dtg0izri8o?si=f6360265ff1e4c2e" },
+            { name: "Siyaahi", link: "https://open.spotify.com/track/5lrS8diWHYl7h5XDrgNtXo?si=077285aa9b3b44f9" },
+            { name: "Bemisaal", link: "https://open.spotify.com/track/5cwsS8aSpeqjdgYTGKe4j4?si=fcd52d5bd3bf41e3" },
+            { name: "Jado Mila", link: "https://open.spotify.com/track/1BgiUBo2zxTCANKa0HY6Gp?si=6ca821bd54724bb1" }
         ];
 
-        const placeholders = [
-            'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=400&h=400&fit=crop',
-            'https://images.unsplash.com/photo-1459749411177-042180ce673c?q=80&w=400&h=400&fit=crop',
-            'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=400&h=400&fit=crop',
-            'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=400&h=400&fit=crop'
-        ];
+        // The two image URLs provided
+        const img1 = "https://raw.githubusercontent.com/ayushnandi718-dev/Sahil-Singh-/main/images.jpeg";
+        const img2 = "https://raw.githubusercontent.com/ayushnandi718-dev/Sahil-Singh-/main/images%20(1).jpeg";
 
-        const musicGrid = document.getElementById('musicGrid');
-
-        songs.forEach((song, index) => {
+        const songGrid = document.getElementById('song-grid');
+        trackData.forEach((track, index) => {
+            // Alternate images using modulo
+            const currentImg = index % 2 === 0 ? img1 : img2;
+            
             const card = document.createElement('div');
-            card.className = 'music-card glass rounded-2xl p-4 flex flex-col group reveal';
-            const randomImg = placeholders[index % placeholders.length];
-
+            card.className = 'song-card rounded-3xl p-5 flex flex-col reveal';
             card.innerHTML = `
-                <div class="relative aspect-square rounded-xl overflow-hidden mb-4 bg-zinc-800">
-                    <img src="${randomImg}" class="w-full h-full object-cover opacity-70 group-hover:scale-110 transition duration-700" alt="${song} Cover">
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 bg-black/40">
-                         <a href="https://open.spotify.com/artist/4QQdPHagGVXBWRBtic4XzL?si=P_ewBIraRyW1sDaH_-Djzg" target="_blank" class="p-4 bg-white rounded-full text-black transform scale-90 group-hover:scale-100 transition duration-300">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                         </a>
+                <div class="relative rounded-2xl overflow-hidden mb-5 aspect-square bg-[#111]">
+                    <img src="${currentImg}" class="w-full h-full object-cover opacity-70">
+                    <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[10px] text-rose-400 font-bold italic">
+                        No. ${(index + 1).toString().padStart(2, '0')}
                     </div>
                 </div>
-                <h3 class="text-lg font-semibold mb-1 truncate">${song}</h3>
-                <p class="text-xs text-zinc-500 mb-4">Sahil Singh</p>
-                <div class="mt-auto flex gap-4 pt-4 border-t border-white/5">
-                    <a href="https://open.spotify.com/artist/4QQdPHagGVXBWRBtic4XzL?si=P_ewBIraRyW1sDaH_-Djzg" target="_blank" class="text-zinc-400 hover:text-[#1DB954] transition">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm5.508 17.304c-.216.354-.672.468-1.026.252-2.85-1.74-6.438-2.13-10.662-1.164-.402.096-.81-.15-.906-.552-.096-.402.15-.81.552-.906 4.638-1.062 8.604-.612 11.79 1.332.354.21.468.672.252 1.032zm1.47-3.258c-.276.444-.858.582-1.302.306-3.264-2.004-8.238-2.586-12.096-1.416-.498.15-1.026-.132-1.176-.63-.15-.498.132-1.026.63-1.176 4.41-1.338 9.894-.696 13.638 1.602.444.276.582.858.306 1.314zm.126-3.414C15.24 8.214 8.844 8 5.124 9.126a1.122 1.122 0 1 1-.66-2.148c4.26-1.296 11.334-1.062 15.822 1.602a1.122 1.122 0 1 1-1.182 1.902z"/></svg>
-                    </a>
-                    <a href="https://music.apple.com/in/artist/sahil-singh/1659141416" target="_blank" class="text-zinc-400 hover:text-[#FA243C] transition">
-                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.1 2.48-1.34.03-1.77-.79-3.29-.79-1.53 0-1.99.76-3.27.82-1.31.05-2.32-1.32-3.15-2.52-1.71-2.46-3.01-6.95-1.26-9.98.87-1.51 2.41-2.46 4.11-2.49 1.29-.03 2.51.87 3.3.87.79 0 2.27-1.07 3.8-0.91 0.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.37 2.81zM15.48 2c-1.03 1.23-1.83 2.66-1.53 4.42 1.58.13 2.97-.68 3.76-2.13 0.73-1.35.53-2.91-1.1-4.04z"/></svg>
+                <h4 class="text-lg font-bold mb-4 truncate">${track.name}</h4>
+                <div class="mt-auto">
+                    <a href="${track.link}" target="_blank" class="flex items-center justify-center gap-3 py-3 rounded-xl bg-green-500/10 text-green-500 hover:bg-green-500 hover:text-white transition-all text-xs font-bold border border-green-500/20">
+                        <i class="fab fa-spotify text-base"></i> SPOTIFY
                     </a>
                 </div>
             `;
-            musicGrid.appendChild(card);
+            songGrid.appendChild(card);
         });
 
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-
+        // Intersection Observer for General Reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
+        // Quote Slider Logic
+        const slides = document.querySelectorAll('.quote-slide');
+        const dotsContainer = document.getElementById('slider-dots');
+        let currentSlide = 0;
+
+        // Initialize dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = `w-2 h-2 rounded-full transition-all duration-300 dot ${i === 0 ? 'bg-rose-500' : 'bg-white/20'}`;
+            dotsContainer.appendChild(dot);
         });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => {
+                d.classList.remove('bg-rose-500');
+                d.classList.add('bg-white/20');
+            });
+            
+            slides[index].classList.add('active');
+            dots[index].classList.remove('bg-white/20');
+            dots[index].classList.add('bg-rose-500');
+        }
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }, 4000);
     </script>
 </body>
 </html>
-
